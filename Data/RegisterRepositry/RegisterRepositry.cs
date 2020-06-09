@@ -19,17 +19,19 @@ namespace Exmination.Data.RegisterRepositry
 
         //    //return dBWebData.SaveChanges() > 0;
         //}
-        public void Add(Registation registation)
+        public bool Add(Registation registation)
         {
             try
             {
                 Console.WriteLine(registation.Email);
                 repo.Registations.Add(registation);
                 repo.SaveChanges();
+                return true;
             }
             catch(Exception e)
             {
                 Console.WriteLine(e);
+                return false;
             }
         }
 
@@ -61,6 +63,27 @@ namespace Exmination.Data.RegisterRepositry
             {
                 return false;
             }
+        }
+
+        public bool Login(string email, string password)
+        {
+            try
+            {
+                Registation reg = repo.Registations.FirstOrDefault(r => r.Email == email);
+
+                if (reg != null)
+                {
+                    if (reg.Password == password)
+                    {
+                        return true;
+                    }
+                }
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+            return false;
         }
     }
 }

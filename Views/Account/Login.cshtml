@@ -5,6 +5,12 @@
 
 <h1>Login</h1>
 <div>
+    @{
+        if (TempData["Invalid"] != null)
+        {
+         <span>@TempData["Invalid"]</span>
+        }
+     }
     <form id="regForm" method="post">
        
         <div>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Exmination.Data;
+using Exmination.Data.EnrollRepositry;
 using Exmination.Models.Student;
 using Exmination.ModelView.Student;
 using Microsoft.AspNetCore.Hosting;
@@ -15,9 +16,12 @@ namespace Exmination.Controllers
     public class StudentController : Controller
     {
         private readonly IHostingEnvironment hostingEnvironment;
-        public StudentController(IHostingEnvironment hostingEnvironment)
+        private readonly IEnrollRepositry repositry;
+
+        public StudentController(IHostingEnvironment hostingEnvironment,IEnrollRepositry repositry)
         {
             this.hostingEnvironment = hostingEnvironment;
+            this.repositry = repositry;
         }
         public IActionResult Index()
         {
@@ -38,7 +42,44 @@ namespace Exmination.Controllers
         {
             if (ModelState.IsValid)
             {
+                string uniqueFileName = null;
+                //string path = model.Profile.FileName;
+                //string path2 = model.Signature.FileName;
 
+                double ImageInKB = model.Profile.Length / 1024;
+
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Profile.FileName;
+                string profilePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Signature.FileName;
+                string signaturePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                Enrollment enrollment = new Enrollment()
+                {
+
+                    Name = model.Name,
+                    DOB = model.DOB,
+                    ContactNumber = model.ContactNumber,
+                    Email = model.Email,
+                    Father = model.Father,
+                    Mobile = model.Mobile,
+                    ParmanentAddress = model.ParmanentAddress,
+                    SameAsParmanent = model.SameAsParmanent,
+                    CorrespondanceAddress = model.CorrespondanceAddress,
+                    Programm = model.Programm,
+                    ExameCenterCh1 = null,
+
+                    Profile = profilePath,
+                    Signature = signaturePath
+                };
+
+                if (repositry.Add(enrollment))
+                {
+                    model.Profile.CopyTo(new FileStream(profilePath, FileMode.Create));
+                    model.Profile.CopyTo(new FileStream(signaturePath, FileMode.Create));
+                }
+                return RedirectToAction("Index","Home");
             }
             else
             {
@@ -49,18 +90,9 @@ namespace Exmination.Controllers
                 enrollment.ExameCenterCh3 = centerData.Center();
                 return View(enrollment);
             }
-            //string uniqueFileName = null;
-            //string path = model.Profile.FileName;
-            //string path2 = model.Signature.FileName;
+           
 
-            //double ImageInKB = model.Profile.Length / 1024;
-
-            //string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-            //uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Profile.FileName;
-            //string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-            //model.Profile.CopyTo(new FileStream(filePath, FileMode.Create));
-
-            return View();
+            
         }
 
         public IActionResult Admit_Card()

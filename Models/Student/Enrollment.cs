@@ -27,16 +27,16 @@ namespace Exmination.Models.Student
         public Address CorrespondanceAddress { get; set; }
 
         public string Programm { get; set; }
-        
-        //public IEnumerable<ExameCenter> ExameCenterCh1 { get; set; }
 
-        //public IEnumerable<ExameCenter> ExameCenterCh2 { get; set; }
+        public string ExameCenterCh1 { get; set; }
 
-        //public IEnumerable<ExameCenter> ExameCenterCh3 { get; set; }
+        public string ExameCenterCh2 { get; set; }
 
-        //[Required]
-        //public IFormFile Profile{ get; set; }
-        //[Required]
-        //public IFormFile Signature { get; set; }
+        public string ExameCenterCh3 { get; set; }
+
+        [Required]
+        public string Profile { get; set; }
+        [Required]
+        public string Signature { get; set; }
     }
 }

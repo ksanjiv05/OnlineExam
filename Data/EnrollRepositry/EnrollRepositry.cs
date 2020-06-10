@@ -8,9 +8,25 @@ namespace Exmination.Data.EnrollRepositry
 {
     public class EnrollRepositry : IEnrollRepositry
     {
-        public void Add(Enrollment enrollment)
+        private readonly ExaminationDBAccess repo;
+
+        public EnrollRepositry(ExaminationDBAccess repo)
         {
-            throw new NotImplementedException();
+            this.repo = repo;
+        }
+        public bool Add(Enrollment enrollment)
+        {
+            try
+            {
+                repo.Enrollments.Add(enrollment);
+                repo.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
         }
 
         public IEnumerable<Enrollment> GetEnrollment()
@@ -27,5 +43,7 @@ namespace Exmination.Data.EnrollRepositry
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

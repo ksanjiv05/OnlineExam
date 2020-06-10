@@ -35,12 +35,17 @@ namespace Exmination.Controllers
             
             if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("SessionName", "Jarvik");
-                HttpContext.Session.SetInt32("SessionAge", 24);
-                return RedirectToAction( "index", "Home");
+
+                if(_repositry.Login(model.Username , model.Password))
+                {
+                    HttpContext.Session.SetString("UserName", model.Username);
+                    return RedirectToAction("Enroll", "Student");
+                }
+                TempData["Invalid"] = "Inavalid Creadintatial !";
+                
             }
-                //return RedirectToAction("Dashboard", "StudentDashboard");
-            return View();
+            
+            return View(new LoginModel() { Username="",Password=""});
         }
         [HttpGet]
         public IActionResult Registration()
@@ -65,9 +70,15 @@ namespace Exmination.Controllers
                     Password = password
                 };
 
-                _repositry.Add(registation);
+                bool status = _repositry.Add(registation);
+                if (status)
+                {
+                    TempData.Add("Reg","168266440");
+                    TempData.Add("Password","0005");
+                    return RedirectToAction("Index","Home");
+                }
             }
-            return View();
+            return View(new RegistrationViewModel());
         }
 
         public IEnumerable<Registation> GetRegistration()

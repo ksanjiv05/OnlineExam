@@ -10,6 +10,8 @@ namespace Exmination.Models.Account
     {
         public int id { get; set; }
         [Required]
+        public string Registration_number { get; set; }
+        [Required]
         public string ExaminationApplied { get; set; }
         [Required][MinLength(5)]
         public string CandidateName { get; set; }

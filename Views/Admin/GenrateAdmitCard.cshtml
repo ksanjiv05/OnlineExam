@@ -1,0 +1,35 @@
+﻿@model Exmination.ModelView.Services.GenrateAdmitCard
+   
+    <form id="regForm" method="post">
+        <div>
+            <label asp-for="GenrateExameFor"> Genrate Admit Card Exame For :</label>
+            <select asp-for="GenrateExameFor">
+                <option value="BCA">BCA</option>
+                <option value="MCA">MCA</option>
+            </select>
+            <span asp-validation-for="GenrateExameFor"></span>
+        </div>
+        <br />
+        <div>
+            <label asp-for="ExameDate"> Exame date</label>
+            <input type="date" asp-for="ExameDate" class="form-control" />
+            <span asp-validation-for="ExameDate"></span>
+        </div>
+        <br />
+        <div>
+            <label asp-for="reportingTime">Reportig Time :</label>
+            <input type="time" asp-for="reportingTime" class="form-control" />
+            <span asp-validation-for="reportingTime"></span>
+        </div>
+        <br>
+        <div>
+            <label asp-for="EntryClosingTime">Closing Time :</label>
+            <input type="time" asp-for="EntryClosingTime" class="form-control" />
+            <span asp-validation-for="EntryClosingTime"></span>
+        </div>
+        <br>
+
+        <div>
+            <input type="submit" class="form-control btn btn-success" value="Genrate Admit Cards" />
+        </div>
+    </form>

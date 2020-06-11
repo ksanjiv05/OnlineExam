@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Exmination.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,9 +50,11 @@ namespace Exmination.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Registration_number = table.Column<string>(nullable: false),
                     ExaminationApplied = table.Column<string>(nullable: false),
                     CandidateName = table.Column<string>(nullable: false),
                     Mobile = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -75,7 +77,12 @@ namespace Exmination.Migrations
                     ParmanentAddressId = table.Column<int>(nullable: false),
                     SameAsParmanent = table.Column<bool>(nullable: false),
                     CorrespondanceAddressId = table.Column<int>(nullable: true),
-                    Programm = table.Column<string>(nullable: true)
+                    Programm = table.Column<string>(nullable: true),
+                    ExameCenterCh1 = table.Column<string>(nullable: true),
+                    ExameCenterCh2 = table.Column<string>(nullable: true),
+                    ExameCenterCh3 = table.Column<string>(nullable: true),
+                    Profile = table.Column<string>(nullable: false),
+                    Signature = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

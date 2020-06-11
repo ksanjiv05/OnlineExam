@@ -1,5 +1,6 @@
 ﻿using Exmination.Models;
 using Exmination.Models.Account;
+using Exmination.Models.Services;
 using Exmination.Models.Student;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,6 +20,8 @@ namespace Exmination.Data
         public DbSet<Enrollment> Enrollments { get; set; }
         public DbSet<Registation> Registations { get; set; }
         public DbSet<EximinationCenter> EximinationCenters { get; set; }
+        public DbSet<StudentAdmitCard> StudentAdmitCards { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

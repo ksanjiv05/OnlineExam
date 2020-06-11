@@ -8,14 +8,25 @@
             <legend> Personal Details:  </legend>
             <div class="row">
                 <div class="col-md-6">
-                    <input placeholder="First name..." class="form-control enrollInput" asp-for="Name">
-                    <input placeholder="Contact Number..." class="form-control enrollInput" asp-for="ContactNumber">
+                    <input placeholder="First name..." disabled class="form-control enrollInput" asp-for="Name">
+                    <input placeholder="Contact Number..." disabled class="form-control enrollInput" asp-for="ContactNumber">
                     <input placeholder="Father's name..." class="form-control enrollInput" asp-for="Father">
                     <span asp-validation-for="Father"></span>
+                    <select asp-for="Sex">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <span asp-validation-for="Sex"></span>
+                    <select asp-for="Catagory">
+                        <option value="obc">OBC</option>
+                        <option value="SC/ST">SC/ST</option>
+                        <option value="Mcq">MCQ</option>
+                    </select>
+                    <span asp-validation-for="Catagory"></span>
                 </div>
                 <div class="col-md-6">
-                    <input placeholder="Date of Birth..." class="form-control enrollInput" asp-for="DOB" type="date">
-                    <input placeholder="Email..." class="form-control enrollInput" asp-for="Email">
+                    <input placeholder="Email..." disabled class="form-control enrollInput" asp-for="Email">
+                    <input  class="form-control" asp-for="DOB" type="date">
                     <input placeholder="Father's Contact Number..." class="form-control enrollInput" asp-for="Mobile">
                     <span asp-validation-for="Mobile"></span>
                 </div>
@@ -47,72 +58,35 @@
             </div>
         </fieldset>
 
-            @*public Programm Program { get; set; }
+        @*public Programm Program { get; set; }
         public RequiredSubject RequiredSubject { get; set; }
         public OptionalSubject OptionalSubject { get; set; }*@
         <fieldset>
-            <legend> Personal Details:  </legend>
+            <legend> Exam Details:  </legend>
                 <div class="row">
                     <div class="col-md-12">
                         Programm:
-                        <input value="BCA" class="form-control enrollInput" asp-for="Programm" disabled>
+                        <input class="form-control enrollInput" asp-for="Programm" disabled>
 
-                        @*@{
-            SelectList yearSelectList = new SelectList(Model.ExameCenterCh1, "Id", "Description");
-        }*@
-                        @*@Html.DropDownListFor("dd1",m => m.ExameCenterCh1, Model.ExameCenterCh1)*@
-                        @*@Html.DropDownList("MySkills", new SelectList(Model.ExameCenterCh1, "Value", "Text"))*@
-                        @*<select asp-for="ExameCenterCh1"
-                asp-items="Html.GetEnumSelect>" class="form-control"></select>
-        <select>*@      
+                            @*@{
+                                    SelectList yearSelectList = new SelectList(Model.ExameCenterCh1, "Id", "Description");
+                                }*@
+                            @*@Html.DropDownListFor("dd1",m => m.ExameCenterCh1, Model.ExameCenterCh1)*@
+                            @*@Html.DropDownList("MySkills", new SelectList(Model.ExameCenterCh1, "Value", "Text"))*@
+                            @*<select asp-for="ExameCenterCh1"
+                            asp-items="Html.GetEnumSelect>" class="form-control"></select>
+                            <select>*@      
                         <label >Choose your Exam Center :</label>
-                        <select name="ExameCenterCh1">
+                        <select asp-for="centerCode">
                             @{
-                                bool flag = true;
-                                foreach (ExameCenter center in Model.ExameCenterCh1)
+                                
+                                <option disabled selected> Please select one --------- </option>
+                                foreach (EximinationCenter center in Model.ExameCenterCh1)
                                 {
-                                    if (flag)
-                                    {
-                                        <option selected>@center.CenterName</option>
-                                        flag = false;
-                                    }
-                                    else{
-                                        <option>@center.CenterName</option>
-                                    }
-                                }
-                            }
-                        </select>
-                        <select name="ExameCenterCh2">
-                            @{
-                                flag = true;
-                                foreach (ExameCenter center in Model.ExameCenterCh2)
-                                {
-                                    if (flag)
-                                    {
-                                        <option >@center.CenterName</option>
-                                        flag = false;
-                                    }
-                                    else
-                                    {
-                                        <option>@center.CenterName ll</option>
-                                    }
-                                }
-                            }
-                        </select>
-                        <select name="ExameCenterCh3">
-                            @{
-                                flag = true;
-                                foreach (ExameCenter center in Model.ExameCenterCh3)
-                                {
-                                    if (flag)
-                                    {
-                                        <option selected>@center.CenterName kk</option>
-                                        flag = false;
-                                    }
-                                    else
-                                    {
-                                        <option>@center.CenterName</option>
-                                    }
+                                   
+                                    
+                                        <option value="@center.Code">@center.Name (@center.Code)   @center.SeatAvailable</option>
+                                    
                                 }
                             }
                         </select>
@@ -128,7 +102,6 @@
                     <span asp-validation-for="Profile"></span>
                     <input placeholder="Signature" class="form-control  custom-file-input enrollInput" type="file" asp-for="Signature">
                     <span asp-validation-for="Signature"></span>
-
                     <input type="submit" value="Register" class="form-control btn btn-success " >
                 </div>
             </div>

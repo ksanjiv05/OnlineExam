@@ -47,8 +47,15 @@ using Exmination.ModelView.Student;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 6 "C:\Users\ksanjiv\Desktop\MiniProj\Exmination\Exmination\Views\_ViewImports.cshtml"
+using Exmination.ModelView.Services;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"894f02eda154edee12fa16cfd875b1743969ffa9", @"/Views/Dashboard/StudentDashboard.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"84e5acd2bcddff3ea85f46e3fd9a3f98d3ce9c95", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"5d13cde76e809d60fec9029202340f86daf70e3e", @"/Views/_ViewImports.cshtml")]
     public class Views_Dashboard_StudentDashboard : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

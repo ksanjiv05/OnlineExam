@@ -12,11 +12,15 @@ namespace Exmination.Models.Student
     {
         // clear
         public int Id { get; set; }
+       
+        public string Registration_number { get; set; }
         public string Name { get; set; }
         public DateTime DOB { get; set; }
         public string ContactNumber { get; set; }
         public string Email { get; set; }
-        
+        public string Sex { get; set; }
+        public string Catagory { get; set; }
+
         [Required]
         public string Father { get; set; }
         public string Mobile { get; set; }
@@ -28,11 +32,7 @@ namespace Exmination.Models.Student
 
         public string Programm { get; set; }
 
-        public string ExameCenterCh1 { get; set; }
-
-        public string ExameCenterCh2 { get; set; }
-
-        public string ExameCenterCh3 { get; set; }
+        public string ExameCenter { get; set; }
 
         [Required]
         public string Profile { get; set; }

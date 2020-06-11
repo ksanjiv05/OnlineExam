@@ -11,7 +11,7 @@ namespace Exmination.Data.EnrollRepositry
         public bool Add(Enrollment enrollment);
         public void Remove(int id);
         public IEnumerable<Enrollment> GetEnrollment();
-        public Enrollment GetEnrollmentById();
+        public Enrollment GetEnrollmentById(string registration_num);
 
     }
 }

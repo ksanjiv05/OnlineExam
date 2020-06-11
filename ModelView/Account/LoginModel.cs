@@ -9,7 +9,7 @@ namespace Exmination.Models
     public class LoginModel
     {
         [Required]
-        [DataType(DataType.EmailAddress)]
+        
         public string Username { get; set; }
         [Required]
         [DataType(DataType.Password)]

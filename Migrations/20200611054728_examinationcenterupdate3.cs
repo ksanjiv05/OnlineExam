@@ -2,22 +2,21 @@
 
 namespace Exmination.Migrations
 {
-    public partial class updateReg : Migration
+    public partial class examinationcenterupdate3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "Password",
-                table: "Registations",
-                nullable: false,
-                defaultValue: "");
+                name: "Registration_number",
+                table: "Enrollments",
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Password",
-                table: "Registations");
+                name: "Registration_number",
+                table: "Enrollments");
         }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exmination.Migrations
 {
     [DbContext(typeof(ExaminationDBAccess))]
-    [Migration("20200531140131_updateReg")]
-    partial class updateReg
+    [Migration("20200610180800_examinationcenterupdate")]
+    partial class examinationcenterupdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,10 @@ namespace Exmination.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Registration_number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -113,10 +117,13 @@ namespace Exmination.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SeatAvailable")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TotalSeat")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -144,6 +151,15 @@ namespace Exmination.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ExameCenterCh1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExameCenterCh2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExameCenterCh3")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Father")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -157,11 +173,19 @@ namespace Exmination.Migrations
                     b.Property<int>("ParmanentAddressId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Profile")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Programm")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("SameAsParmanent")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Signature")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

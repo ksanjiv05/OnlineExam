@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using Exmination.Data;
+using Exmination.Data.AdmitCardRepositry;
+using Exmination.Data.CenterRepositry;
 using Exmination.Data.EnrollRepositry;
 using Exmination.Data.RegisterRepositry;
 using Microsoft.AspNetCore.Builder;
@@ -41,9 +43,11 @@ namespace Exmination
             services.AddDbContextPool<ExaminationDBAccess>(entity => entity.UseSqlServer(_configuration.GetConnectionString("ExamDbConnection")));
             services.AddScoped<IRegisterRepositry, RegisterRepositry>();
             services.AddScoped<IEnrollRepositry,EnrollRepositry >();
+            services.AddScoped<ICernterRepositry, CernterRepositry>();
+            services.AddScoped<IAdmitCardRepositry, AdmitCardRepositry>();
             //services.AddControllers();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(30);//You can set Time   
             });
             services.AddControllersWithViews();
         }

@@ -25,8 +25,10 @@ namespace Exmination.Models
         public string CenterInchargeName { get; set; }
         [Required]
         public string CenterInchargeEmail { get; set; }
+        
+        public int SeatAvailable { get; set; }
         [Required]
-        public string SeatAvailable { get; set; }
+        public int TotalSeat { get; set; }
 
     }
 }

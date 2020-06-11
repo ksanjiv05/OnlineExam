@@ -18,7 +18,10 @@ namespace Exmination.ModelView.Student
             public DateTime DOB { get; set; }
             public string ContactNumber { get; set; }
             public string Email { get; set; }
-
+            [Required]    
+            public string Sex { get; set; }
+            [Required]
+            public string Catagory { get; set; }
             [Required]
             public string Father { get; set; }
             public string Mobile { get; set; }
@@ -30,13 +33,14 @@ namespace Exmination.ModelView.Student
 
             public string Programm { get; set; }
 
-            public IEnumerable<ExameCenter> ExameCenterCh1 { get; set; }
+            public IEnumerable<EximinationCenter> ExameCenterCh1 { get; set; }
+            public string   centerCode { get; set; }
 
-            public IEnumerable<ExameCenter> ExameCenterCh2 { get; set; }
+        //public IEnumerable<ExameCenter> ExameCenterCh2 { get; set; }
 
-            public IEnumerable<ExameCenter> ExameCenterCh3 { get; set; }
+        //public IEnumerable<ExameCenter> ExameCenterCh3 { get; set; }
 
-            [Required]
+        [Required]
             public IFormFile Profile { get; set; }
             [Required]
             public IFormFile Signature { get; set; }

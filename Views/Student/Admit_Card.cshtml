@@ -12,15 +12,20 @@
     <form id="regForm" method="post" onsubmit="return validation(event)">
         <div asp-validation-summary="All"></div>
         <div>
+            <label name="ExamFor">Exam for</label>
+            
+            <select name="ExamFor">
+                <option value="BCA">BCA</option>
+                <option value="MCA">MCA</option>
+            </select>
+        </div>
+        <br>
+        <div>
             <label asp-for=" RollNumber">Enter Your Roll. Number</label>
             <input asp-for=" RollNumber" class="form-control" />
         </div>
         <br />
-        <div>
-            <label asp-for="DOB">Date of Birth</label>
-            <input asp-for="DOB" class="form-control" type="date" />
-        </div>
-        <br>
+
         <div>
             <input type="submit" class="form-control btn btn-success" value="Get Admit Card" />
         </div>

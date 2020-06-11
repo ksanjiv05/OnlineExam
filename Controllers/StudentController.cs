@@ -4,10 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Exmination.Data;
+using Exmination.Data.AdmitCardRepositry;
+using Exmination.Data.CenterRepositry;
 using Exmination.Data.EnrollRepositry;
+using Exmination.Data.RegisterRepositry;
+using Exmination.Models;
+using Exmination.Models.Account;
 using Exmination.Models.Student;
+using Exmination.ModelView.Services;
 using Exmination.ModelView.Student;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Rotativa.AspNetCore;
 
@@ -17,11 +24,22 @@ namespace Exmination.Controllers
     {
         private readonly IHostingEnvironment hostingEnvironment;
         private readonly IEnrollRepositry repositry;
+        private readonly ICernterRepositry cernterRepositry;
+        private readonly IRegisterRepositry registerRepositry;
+        private readonly IAdmitCardRepositry cardRepositry;
 
-        public StudentController(IHostingEnvironment hostingEnvironment,IEnrollRepositry repositry)
+        public StudentController(IHostingEnvironment hostingEnvironment,
+            IEnrollRepositry repositry,
+            ICernterRepositry cernterRepositry,
+            IRegisterRepositry registerRepositry,
+            IAdmitCardRepositry cardRepositry
+            )
         {
             this.hostingEnvironment = hostingEnvironment;
             this.repositry = repositry;
+            this.cernterRepositry = cernterRepositry;
+            this.registerRepositry = registerRepositry;
+            this.cardRepositry = cardRepositry;
         }
         public IActionResult Index()
         {
@@ -30,64 +48,81 @@ namespace Exmination.Controllers
 
         public IActionResult Enroll()
         {
-            CenterData centerData = new CenterData();
+            //CenterData centerData = new CenterData();
+            //EnrollmentViewModel enrollment = new EnrollmentViewModel();
+            //enrollment.ExameCenterCh1 = centerData.Center();
+            //enrollment.ExameCenterCh2 = centerData.Center();
+            //enrollment.ExameCenterCh3 = centerData.Center();
+
+            if (HttpContext.Session.GetString("UserName") == null)
+                return RedirectToAction("Login","Account");
+
+            Registation registation = registerRepositry.GetRegistationByRegistration_num(HttpContext.Session.GetString("UserName"));
             EnrollmentViewModel enrollment = new EnrollmentViewModel();
-            enrollment.ExameCenterCh1 = centerData.Center();
-            enrollment.ExameCenterCh2 = centerData.Center();
-            enrollment.ExameCenterCh3 = centerData.Center();
+            enrollment.Name = registation.CandidateName;
+            enrollment.ContactNumber = registation.Mobile;
+            enrollment.Email = registation.Email;
+            enrollment.Programm = registation.ExaminationApplied;
+            enrollment.ExameCenterCh1 = cernterRepositry.GetExamCentersSeatAvaiablity();
             return View(enrollment);
         }
         [HttpPost]
         public IActionResult Enroll(EnrollmentViewModel model)
         {
+            string registration_num = HttpContext.Session.GetString("UserName");
+            if (registration_num == null)
+            {
+                TempData["EnrollSession"] = "Session Expired !";
+                return RedirectToAction("Login", "Account");
+            }
             if (ModelState.IsValid)
             {
-                string uniqueFileName = null;
                 //string path = model.Profile.FileName;
                 //string path2 = model.Signature.FileName;
 
                 double ImageInKB = model.Profile.Length / 1024;
 
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Profile.FileName;
-                string profilePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string uniqueProfile = Guid.NewGuid().ToString() + "_" + model.Profile.FileName;
+                string profilePath = Path.Combine(uploadsFolder, uniqueProfile);
 
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Signature.FileName;
-                string signaturePath = Path.Combine(uploadsFolder, uniqueFileName);
+                string uniqueSignature = Guid.NewGuid().ToString() + "_" + model.Signature.FileName;
+                string signaturePath = Path.Combine(uploadsFolder, uniqueSignature);
 
+                Registation registation = registerRepositry.GetRegistationByRegistration_num(HttpContext.Session.GetString("UserName"));
                 Enrollment enrollment = new Enrollment()
                 {
 
-                    Name = model.Name,
+                    Name = registation.CandidateName,
+                    Registration_number= registration_num,
                     DOB = model.DOB,
-                    ContactNumber = model.ContactNumber,
-                    Email = model.Email,
+                    Sex = model.Sex,
+                    Catagory= model.Catagory,
+                    ContactNumber = registation.Mobile,
+                    Email = registation.Email,
                     Father = model.Father,
                     Mobile = model.Mobile,
                     ParmanentAddress = model.ParmanentAddress,
                     SameAsParmanent = model.SameAsParmanent,
                     CorrespondanceAddress = model.CorrespondanceAddress,
-                    Programm = model.Programm,
-                    ExameCenterCh1 = null,
-
-                    Profile = profilePath,
-                    Signature = signaturePath
+                    Programm = registation.ExaminationApplied,
+                    ExameCenter = model.centerCode,
+                    Profile = uniqueProfile,
+                    Signature = uniqueSignature
                 };
 
                 if (repositry.Add(enrollment))
                 {
                     model.Profile.CopyTo(new FileStream(profilePath, FileMode.Create));
                     model.Profile.CopyTo(new FileStream(signaturePath, FileMode.Create));
+                    TempData["Enroll"] = "Your are Enrolled !";
                 }
                 return RedirectToAction("Index","Home");
             }
             else
             {
-                CenterData centerData = new CenterData();
                 EnrollmentViewModel enrollment = new EnrollmentViewModel();
-                enrollment.ExameCenterCh1 = centerData.Center();
-                enrollment.ExameCenterCh2 = centerData.Center();
-                enrollment.ExameCenterCh3 = centerData.Center();
+                enrollment.ExameCenterCh1 = cernterRepositry.GetExamCenters();
                 return View(enrollment);
             }
            
@@ -103,14 +138,28 @@ namespace Exmination.Controllers
         [HttpPost]
         public IActionResult Admit_Card(AdmitCard model)
         {
-            return RedirectToAction("PrintAdmitCard", "Student");
+            if(ModelState.IsValid)
+            {
+                StudentAdmitCardViewModel studentAdmitCard = cardRepositry.GetAdmitCard(model.RollNumber, model.ExamFor);
+                if(studentAdmitCard==null)
+                {
+                    TempData["admitCardRes"] = "Bad creadential !!!";
+                    return RedirectToAction("Admit_Card", "Student");
+                }
+                return RedirectToAction("PrintAdmitCard", "Student",studentAdmitCard);
+            }
+            return View();
         }
 
-        public IActionResult PrintAdmitCard()
+        public IActionResult PrintAdmitCard(StudentAdmitCardViewModel model)
         {
-            return new   ViewAsPdf();
+            return new   ViewAsPdf(model);
             //return View();
+        } 
+        [HttpGet]
+        public IActionResult Enrolled(Enrollment model)
+        {
+            return View(model);
         }
-
     }
 }

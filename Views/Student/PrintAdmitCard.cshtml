@@ -1,6 +1,12 @@
-﻿@section Scripts{
+﻿@model StudentAdmitCardViewModel
+@section Scripts{
     <script src="~/js/admit_card_header_remove.js"></script>
 }
+<div>
+    @Model.Roll
+
+    @Model.ExameDate
+</div>
 @*@model Print_Admit_Card
     @{
         ViewData["Title"] = "Print_Admit_Card";

@@ -8,28 +8,45 @@
     @{
         if (TempData["Invalid"] != null)
         {
-         <span>@TempData["Invalid"]</span>
+            <span>@TempData["Invalid"]</span>
         }
-     }
-    <form id="regForm" method="post">
-       
-        <div>
-            <label asp-for="Username"></label>
-            <input asp-for="Username" class="form-control" />
-            <span asp-validation-for="Username"></span>
-        </div>
-        <br />
-        <div>
-            <label asp-for="Password"></label>
-            <input type="password" asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password"></span>
-        </div>
-        <br>
-        <div>
-            <input type="submit" class="form-control btn btn-success" value="Login"/>
-        </div>
-    </form>
+        else if (TempData["EnrollSession"] != null)
+        {
+            <div id="myModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Instructions </h4>
+                        </div>
+                        <div class="modal-body">
+                            <h2>@TempData["EnrollSession"]</h2>
+                            <h3>Please Login again !!!</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          }
+        }
+        <form id="regForm" method="post">
 
-</div>
+            <div>
+                <label asp-for="Username"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username"></span>
+            </div>
+            <br />
+            <div>
+                <label asp-for="Password"></label>
+                <input type="password" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <br>
+            <div>
+                <input type="submit" class="form-control btn btn-success" value="Login" />
+            </div>
+        </form>
+
+    </div>
 
 

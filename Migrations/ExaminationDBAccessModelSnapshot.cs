@@ -46,6 +46,10 @@ namespace Exmination.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Registration_number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("id");
 
                     b.ToTable("Registations");
@@ -110,17 +114,49 @@ namespace Exmination.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SeatAvailable")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SeatAvailable")
+                        .HasColumnType("int");
 
                     b.Property<string>("State")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TotalSeat")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("EximinationCenters");
+                });
+
+            modelBuilder.Entity("Exmination.Models.Services.StudentAdmitCard", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EntryClosingTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExameDate")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GenrateExameFor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Roll")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("reportingTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("StudentAdmitCards");
                 });
 
             modelBuilder.Entity("Exmination.Models.Student.Enrollment", b =>
@@ -129,6 +165,9 @@ namespace Exmination.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Catagory")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNumber")
                         .HasColumnType("nvarchar(max)");
@@ -142,13 +181,7 @@ namespace Exmination.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ExameCenterCh1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExameCenterCh2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExameCenterCh3")
+                    b.Property<string>("ExameCenter")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Father")
@@ -171,8 +204,14 @@ namespace Exmination.Migrations
                     b.Property<string>("Programm")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Registration_number")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("SameAsParmanent")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Sex")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Signature")
                         .IsRequired()
